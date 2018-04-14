@@ -90,7 +90,22 @@ void Matrix::imprime_matrix(){
     }
 }
 
-Matrix Matrix::operator + (Matrix b) const{
+
+/*
+int getRows(){
+    int n_linhas = n_lin;
+    return n_linhas;
+}
+
+
+int getCols(){
+    int n_colunas = n_col;
+    return n_colunas;
+}
+*/
+
+
+Matrix Matrix::operator + (Matrix& b) const{
     Matrix sum(b.n_lin, b.n_col);
     if (n_lin == b.n_lin && n_col == b.n_col) {
         for (int i = 0; i < b.n_lin; ++i) {
@@ -103,5 +118,82 @@ Matrix Matrix::operator + (Matrix b) const{
         return sum;
     }else{
         return sum;
+    }
+}
+
+Matrix Matrix::operator - (Matrix& b) const{
+    Matrix sum(b.n_lin, b.n_col);
+    if (n_lin == b.n_lin && n_col == b.n_col) {
+        for (int i = 0; i < b.n_lin; ++i) {
+            for (int j = 0; j < b.n_col; ++j) {
+                sum.matrix[i][j] = matrix[i][j] - b.matrix[i][j];
+                std::cout << sum.matrix[i][j];
+            }
+            std::cout << '\n';
+        }
+        return sum;
+    }else{
+        return sum;
+    }
+}
+
+Matrix Matrix::operator * (Matrix& b) const{
+    Matrix sum(b.n_lin, b.n_col);
+    if (n_lin == b.n_lin && n_col == b.n_col) {
+        for (int i = 0; i < b.n_lin; ++i) {
+            for (int j = 0; j < b.n_col; ++j) {
+                sum.matrix[i][j] = matrix[i][j] * b.matrix[i][j];
+                std::cout << sum.matrix[i][j];
+            }
+            std::cout << '\n';
+        }
+        return sum;
+    }else{
+        return sum;
+    }
+}
+
+
+Matrix Matrix::operator -= (Matrix& b) const{
+    Matrix sum(b.n_lin, b.n_col);
+    if (n_lin == b.n_lin && n_col == b.n_col) {
+        for (int i = 0; i < b.n_lin; ++i) {
+            for (int j = 0; j < b.n_col; ++j) {
+                matrix[i][j] = matrix[i][j] - b.matrix[i][j];
+                std::cout << matrix[i][j];
+            }
+            std::cout << '\n';
+        }
+    }else{
+    }
+}
+
+
+Matrix Matrix::operator += (Matrix& b) const{
+    Matrix sum(b.n_lin, b.n_col);
+    if (n_lin == b.n_lin && n_col == b.n_col) {
+        for (int i = 0; i < b.n_lin; ++i) {
+            for (int j = 0; j < b.n_col; ++j) {
+                matrix[i][j] = matrix[i][j] + b.matrix[i][j];
+                std::cout << matrix[i][j];
+            }
+            std::cout << '\n';
+        }
+    }else{
+    }
+}
+
+
+Matrix Matrix::operator *= (Matrix& b) const{
+    Matrix sum(b.n_lin, b.n_col);
+    if (n_lin == b.n_lin && n_col == b.n_col) {
+        for (int i = 0; i < b.n_lin; ++i) {
+            for (int j = 0; j < b.n_col; ++j) {
+                matrix[i][j] = matrix[i][j] * b.matrix[i][j];
+                std::cout << matrix[i][j];
+            }
+            std::cout << '\n';
+        }
+    }else{
     }
 }
