@@ -47,6 +47,7 @@ Matrix::~Matrix(){
 
 }
 Matrix::Matrix(const Matrix &outro){
+  std::cout << "-------------------Construtor de cópia ! ----------------" << '\n';
   //Alocação dinamica da matriz
   if(outro.n_lin < 1 || outro.n_col < 1){
       std::cout << "Erro: Parametros invalidos \n";
@@ -128,19 +129,35 @@ int Matrix::getCols(){
 }
 
 
-Matrix Matrix::operator + (Matrix& b) const{
-    static Matrix sum(b.n_lin, b.n_col);
+Matrix Matrix::operator = (Matrix& b) const{
+    //static Matrix sum(b.n_lin, b.n_col);
+    if (n_lin == b.n_lin && n_col == b.n_col) {
+        for (int i = 0; i < b.n_lin; ++i) {
+            for (int j = 0; j < b.n_col; ++j) {
+              matrix[i][j] = b.matrix[i][j];
+                //std::cout << sum.matrix[i][j];
+            }
+            //std::cout << '\n';
+        }
+        return *this;
+    }else{
+      std::cout << " ERRO: Impossivel fazer a soma" << '\n';
+    }
+}
+
+Matrix& Matrix::operator + (Matrix& b) const{
+    static  Matrix sum(b.n_lin, b.n_col);
     if (n_lin == b.n_lin && n_col == b.n_col) {
         for (int i = 0; i < b.n_lin; ++i) {
             for (int j = 0; j < b.n_col; ++j) {
                 sum.matrix[i][j] = matrix[i][j] + b.matrix[i][j];
-                std::cout << sum.matrix[i][j];
+                //std::cout << sum.matrix[i][j];
             }
-            std::cout << '\n';
+            //std::cout << '\n';
         }
         return sum;
     }else{
-std::cout << " ERRO: Impossivel fazer a multiplicação" << '\n';
+      std::cout << " ERRO: Impossivel fazer a soma" << '\n';
     }
 }
 
@@ -156,7 +173,7 @@ Matrix Matrix::operator - (Matrix& b) const{
         }
         return sum;
     }else{
-        std::cout << " ERRO: Impossivel fazer a multiplicação" << '\n';
+        std::cout << " ERRO: Impossivel fazer a subtração" << '\n';
     }
 }
 
@@ -176,7 +193,7 @@ Matrix Matrix::operator * (Matrix& b) const{
     }
 }
 Matrix Matrix::operator *= (Matrix& b) const{
-    //Matrix sum(b.n_lin, b.n_col);
+    Matrix sum(b.n_lin, b.n_col);
     if (n_col==b.n_lin) {
       /* no caso de uma matrix m1(1x5) = m1(1x5)* m2(5x9)
       vai ter que alocar mais memória para m1, já que agora terá 9 Colunas

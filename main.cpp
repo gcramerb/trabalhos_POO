@@ -9,15 +9,17 @@ int main(int argc, char const *argv[]) {
     Matrix m2(10,10);
     Matrix m3(10,10);
     Matrix m4(10,10);
-    std::cout <<" Matriz Identidade \n";
+    //std::cout <<" Matriz Identidade \n";
     m.unit();
-    std::cout <<" Matriz de Uns \n";
+    //std::cout <<" Matriz de Uns \n";
     m2.ones();
-    std::cout <<" Matriz de Zeros \n";
-    //m3.zeros();
-    std::cout <<" Soma de Matrizes \n";
-    std::cout << "Passou _ 1\n";
-    m3 = m2 + m;  // PROBLEMAS COM PASSAGEM POR COPIA DA MATRIZ
+
+    //std::cout <<" Matriz de Zeros \n";
+    m3.zeros();
+    //std::cout <<" Soma de Matrizes \n";
+    //std::cout << "Passou _ 1\n";
+    m3 = m+m2;  // PROBLEMAS COM PASSAGEM POR COPIA DA MATRIZ
+
     m3.imprime_matrix();
     /*
     std::cout << "Passou _ 2\n";

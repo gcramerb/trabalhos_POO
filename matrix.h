@@ -14,7 +14,8 @@ class Matrix {
         void unit();
         int getRows();
         int getCols();
-        Matrix operator + (Matrix& b) const;
+        Matrix operator = (Matrix& b) const;
+        Matrix& operator + (Matrix& b) const;
         Matrix operator - (Matrix& b) const;
         Matrix operator * (Matrix& b) const;
         Matrix operator -= (Matrix& b) const;
