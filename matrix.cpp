@@ -5,7 +5,8 @@
 using namespace std;
 
 //Construtor
-Matrix::Matrix(int n_linhas, int n_colunas) {
+Matrix::Matrix(int n_linhas, int n_colunas):n_lin_(n_linhas),n_col_(n_colunas)
+ {
     //Alocação dinamica da matriz
     if(n_linhas < 1 || n_colunas < 1){
         std::cout << "Erro: Parametros invalidos \n";
@@ -26,47 +27,49 @@ Matrix::Matrix(int n_linhas, int n_colunas) {
             matrix[i][j] = 0;
         }
     }
-
-    n_lin = n_linhas;
-    n_col = n_colunas;
     std::cout << "Construtor" << '\n';
+}
+Matrix::Matrix(){
+  n_lin_ =0;
+  n_col_=0;
+  matrix =NULL;
 }
 
 //Destrutor
 Matrix::~Matrix(){
     if(matrix == NULL)
         std::cout << "Erro: Não foi passado um ponteiro para matriz \n";
-    if(n_lin < 1 || n_col < 1){
+    if(n_lin_< 1 || n_col_< 1){
         std::cout << "Erro: Parametros invalidos \n";
     }
-    for(int i = 0; i < n_lin; ++i){
+    for(int i = 0; i < n_lin_; ++i){
         delete[] matrix[i];
     }
     delete[] matrix;
     std::cout << "Destruiu" << '\n';
 
 }
-Matrix::Matrix(const Matrix &outro){
+Matrix::Matrix(const Matrix &outro) : n_lin_(outro.n_lin_),n_col_(outro.n_col_)
+{
   std::cout << "-------------------Construtor de cópia ! ----------------" << '\n';
   //Alocação dinamica da matriz
-  if(outro.n_lin < 1 || outro.n_col < 1){
+  if(outro.n_lin_< 1 || outro.n_col_< 1){
       std::cout << "Erro: Parametros invalidos \n";
   }
-  this->matrix = new double *[outro.n_lin];
+  this->matrix = new double *[outro.n_lin_];
   if(this->matrix == NULL){
       std::cout << "Erro: Memoria Insuficiente - Linhas \n";
   }
-  for(int i = 0; i < outro.n_lin; i++){
-      this->matrix[i] = new double [outro.n_col];
+  for(int i = 0; i < outro.n_lin_; i++){
+      this->matrix[i] = new double [outro.n_col_];
       if(this->matrix == NULL){
           std::cout << "Erro: Memoria Insuficiente - Colunas \n";
       }
   }
-  this->n_lin=outro.n_lin;
-  this->n_col=outro.n_col;
-  for (int i = 0; i < outro.n_lin; i++) {
-    for (int j = 0; j < outro.n_col; j++) {
-      this->matrix[i][j]=outro.matrix[i][j];
+  int i,j;
+  for (i = 0; i < outro.n_lin_; i++) {
+    for (j = 0; j < outro.n_col_; j++) {
+      matrix[i][j]=outro.matrix[i][j];
     }
   }
 
@@ -75,8 +78,8 @@ Matrix::Matrix(const Matrix &outro){
 
 //Zera todos os elementos da Matriz
 void Matrix::zeros(){
-    for (int i = 0; i < n_lin; i++) {
-        for (int j = 0; j < n_col; j++) {
+    for (int i = 0; i < n_lin_; i++) {
+        for (int j = 0; j < n_col_; j++) {
             matrix[i][j]= 0;
         }
     }
@@ -85,8 +88,8 @@ void Matrix::zeros(){
 //Torma a matriz uma matriz identidade
 void Matrix::unit(){
     int i,j;
-    for (i = 0; i < n_lin; i++) {
-        for (j = 0; j < n_col; j++) {
+    for (i = 0; i < n_lin_; i++) {
+        for (j = 0; j < n_col_; j++) {
             if (i == j) {
                 matrix[i][j]=1;
             }else
@@ -98,8 +101,8 @@ void Matrix::unit(){
 //Preenche a matriz com um em todos os elementos
 void Matrix::ones(){
     int i,j;
-    for (i = 0; i < n_lin; ++i) {
-        for (j = 0; j < n_col; ++j) {
+    for (i = 0; i < n_lin_; ++i) {
+        for (j = 0; j < n_col_; ++j) {
             matrix[i][j] = 1;
         }
     }
@@ -109,8 +112,8 @@ void Matrix::ones(){
 void Matrix::imprime_matrix(){
     int i,j;
     std::cout << "Imprimindo Matriz \n";
-    for (i = 0; i < n_lin; ++i) {
-        for (j = 0; j < n_col; ++j) {
+    for (i = 0; i < n_lin_; ++i) {
+        for (j = 0; j < n_col_; ++j) {
         std::cout << matrix[i][j];
         }
         std::cout<< '\n';
@@ -118,42 +121,66 @@ void Matrix::imprime_matrix(){
 }
 
 int Matrix::getRows(){
-    int n_linhas = n_lin;
+    int n_linhas = n_lin_;
     return n_linhas;
 }
 
 
 int Matrix::getCols(){
-    int n_colunas = n_col;
+    int n_colunas = n_col_;
     return n_colunas;
 }
 
 
-Matrix Matrix::operator = (Matrix& b) const{
-    //static Matrix sum(b.n_lin, b.n_col);
-    if (n_lin == b.n_lin && n_col == b.n_col) {
-        for (int i = 0; i < b.n_lin; ++i) {
-            for (int j = 0; j < b.n_col; ++j) {
+void Matrix::operator = (Matrix& b)const {
+    if (n_lin_== b.n_lin_&& n_col_== b.n_col_) {
+      //alocar espaco ?
+        for (int i = 0; i < b.n_lin_; ++i) {
+            for (int j = 0; j < b.n_col_; ++j) {
               matrix[i][j] = b.matrix[i][j];
-                //std::cout << sum.matrix[i][j];
             }
-            //std::cout << '\n';
+        }
+    }else{
+      std::cout << " ERRO: Impossivel fazer a atribuicao" << '\n';
+    }
+}
+Matrix Matrix::operator += (Matrix& b) const{
+    if (n_lin_== b.n_lin_&& n_col_== b.n_col_) {
+        for (int i = 0; i < b.n_lin_; i++) {
+            for (int j = 0; j < b.n_col_; ++j) {
+                matrix[i][j] = matrix[i][j] + b.matrix[i][j];
+            }
         }
         return *this;
     }else{
       std::cout << " ERRO: Impossivel fazer a soma" << '\n';
     }
 }
-
-Matrix& Matrix::operator + (Matrix& b) const{
-    static  Matrix sum(b.n_lin, b.n_col);
-    if (n_lin == b.n_lin && n_col == b.n_col) {
-        for (int i = 0; i < b.n_lin; ++i) {
-            for (int j = 0; j < b.n_col; ++j) {
-                sum.matrix[i][j] = matrix[i][j] + b.matrix[i][j];
-                //std::cout << sum.matrix[i][j];
+Matrix Matrix::operator -= (Matrix& b) const{
+    if (n_lin_== b.n_lin_&& n_col_== b.n_col_) {
+        for (int i = 0; i < b.n_lin_; ++i) {
+            for (int j = 0; j < b.n_col_; ++j) {
+                matrix[i][j] = matrix[i][j] - b.matrix[i][j];
             }
-            //std::cout << '\n';
+        }
+        return *this;
+    }else{
+      std::cout << " ERRO: Impossivel fazer a subtração" << '\n';
+    }
+}
+
+
+
+
+
+Matrix Matrix::operator + (const Matrix& b)const{
+    Matrix sum(n_lin_, n_col_);
+    if (n_lin_== b.n_lin_&& n_col_== b.n_col_) {
+        for (int i = 0; i < n_lin_; i++) {
+          for (int j = 0; j < n_col_; j++) {
+
+                sum.matrix[i][j] += this->matrix[i][j] + b.matrix[i][j];
+          }
         }
         return sum;
     }else{
@@ -162,10 +189,10 @@ Matrix& Matrix::operator + (Matrix& b) const{
 }
 
 Matrix Matrix::operator - (Matrix& b) const{
-    Matrix sum(b.n_lin, b.n_col);
-    if (n_lin == b.n_lin && n_col == b.n_col) {
-        for (int i = 0; i < b.n_lin; ++i) {
-            for (int j = 0; j < b.n_col; ++j) {
+    Matrix sum(b.n_lin_, b.n_col_);
+    if (n_lin_== b.n_lin_&& n_col_== b.n_col_) {
+        for (int i = 0; i < b.n_lin_; ++i) {
+            for (int j = 0; j < b.n_col_; ++j) {
                 sum.matrix[i][j] = matrix[i][j] - b.matrix[i][j];
                 std::cout << sum.matrix[i][j];
             }
@@ -178,11 +205,11 @@ Matrix Matrix::operator - (Matrix& b) const{
 }
 
 Matrix Matrix::operator * (Matrix& b) const{
-    Matrix sum(n_lin, b.n_col);
-    if (n_col==b.n_lin) {
-      for (int i=0;i< n_lin;i++){
-        for(int j=0; j < b.n_col;j++){
-          for (int k = 0; k < n_col; k++) {
+    Matrix sum(n_lin_, b.n_col_);
+    if (n_col_==b.n_lin_) {
+      for (int i=0;i< n_lin_;i++){
+        for(int j=0; j < b.n_col_;j++){
+          for (int k = 0; k < n_col_; k++) {
             sum.matrix[i][j]=sum.matrix[i][j]+((matrix[i][k])*(b.matrix[k][j]));
           }
         }
@@ -193,8 +220,8 @@ Matrix Matrix::operator * (Matrix& b) const{
     }
 }
 Matrix Matrix::operator *= (Matrix& b) const{
-    Matrix sum(b.n_lin, b.n_col);
-    if (n_col==b.n_lin) {
+    Matrix sum(b.n_lin_, b.n_col_);
+    if (n_col_==b.n_lin_) {
       /* no caso de uma matrix m1(1x5) = m1(1x5)* m2(5x9)
       vai ter que alocar mais memória para m1, já que agora terá 9 Colunas
       tem que usar realloc ?
@@ -202,9 +229,9 @@ Matrix Matrix::operator *= (Matrix& b) const{
 
       */
 
-      for (int i=0;i< n_lin;i++){
-        for(int j=0; j < b.n_col;j++){
-          for (int k = 0; k < n_col; k++) {
+      for (int i=0;i< n_lin_;i++){
+        for(int j=0; j < b.n_col_;j++){
+          for (int k = 0; k < n_col_; k++) {
             sum.matrix[i][j]=sum.matrix[i][j]+((matrix[i][k])*(b.matrix[k][j]));
           }
         }
@@ -212,37 +239,5 @@ Matrix Matrix::operator *= (Matrix& b) const{
         return sum;
     }else{
         std::cout << " ERRO: Impossivel fazer a multiplicação" << '\n';
-    }
-}
-
-
-Matrix Matrix::operator -= (Matrix& b) const{
-    Matrix sum(b.n_lin, b.n_col);
-    if (n_lin == b.n_lin && n_col == b.n_col) {
-        for (int i = 0; i < b.n_lin; ++i) {
-            for (int j = 0; j < b.n_col; ++j) {
-                matrix[i][j] = matrix[i][j] - b.matrix[i][j];
-                std::cout << matrix[i][j];
-            }
-            std::cout << '\n';
-        }
-    }else{
-      std::cout << " ERRO: Impossivel fazer a subtração" << '\n';
-    }
-}
-
-
-Matrix Matrix::operator += (Matrix& b) const{
-    Matrix sum(b.n_lin, b.n_col);
-    if (n_lin == b.n_lin && n_col == b.n_col) {
-        for (int i = 0; i < b.n_lin; ++i) {
-            for (int j = 0; j < b.n_col; ++j) {
-                matrix[i][j] = matrix[i][j] + b.matrix[i][j];
-                std::cout << matrix[i][j];
-            }
-            std::cout << '\n';
-        }
-    }else{
-      std::cout << " ERRO: Impossivel fazer a soma" << '\n';
     }
 }
