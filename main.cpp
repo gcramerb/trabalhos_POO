@@ -17,13 +17,52 @@ int main(int argc, char const *argv[]) {
     m3.zeros();
     m4.ones();
     //std::cout <<" Soma de Matrizes \n";
-    //std::cout << "Passou _ 1\n";
+    std::cout << "MATRIZ M \n";
+    m.imprime_matrix();
+    std::cout << "MATRIZ M4 \n";
+    m4.imprime_matrix();
+
+    std::cout << "-------------------- SOMA M += M4 ------------------------------\n";
+    m += m4;  // PROBLEMAS COM PASSAGEM POR COPIA DA MATRIZ
+    m.imprime_matrix();
+
+    m.unit();
+    m4.ones();
+
+
+    std::cout << "-------------------- SOMA M -= M4 ------------------------------\n";
+    m -= m4;  // PROBLEMAS COM PASSAGEM POR COPIA DA MATRIZ
+    m.imprime_matrix();
+    
+    m.ones();
+    m4.ones();
+        
+
+
+    std::cout << "-------------------- SOMA M *= M4 ------------------------------\n";
+    m *= m4;  // PROBLEMAS COM PASSAGEM POR COPIA DA MATRIZ
+    m.imprime_matrix();
+    
+    m.unit();
+    m4.ones();
+    
+
+    std::cout << "-------------------- SOMA M = M4 ------------------------------\n";
+    m = m4;  // PROBLEMAS COM PASSAGEM POR COPIA DA MATRIZ
+    m.imprime_matrix();
+    
+
     std::cout << "-------------------- SOMA M = M2 + M4 ------------------------------\n";
     m = m2 + m4;  // PROBLEMAS COM PASSAGEM POR COPIA DA MATRIZ
     m.imprime_matrix();
+    
+
+
     std::cout << "--------------------  SUBTRAÇÃO M = M2 - M4  ------------------------------ \n";
     m = m2 - m4;  // PROBLEMAS COM PASSAGEM POR COPIA DA MATRIZ
     m.imprime_matrix();
+    
+
     std::cout << "------------------   MULTIPLICAÇÃO M = M2 * M4   -----------------------\n";
     m = m2 * m4;  // PROBLEMAS COM PASSAGEM POR COPIA DA MATRIZ
     m.imprime_matrix();

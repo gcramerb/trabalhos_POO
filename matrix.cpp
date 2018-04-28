@@ -134,12 +134,12 @@ int Matrix::getCols(){
 
 Matrix& Matrix::operator = (const Matrix& b) {
     if (this == &b) return *this;
-    delete matrix;
-
+    
     n_lin_  = b.n_lin_;
     n_col_ = b.n_col_;
     
-    
+    delete matrix;
+
     matrix = new double *[n_lin_];
     if(matrix == NULL){
         std::cout << "Erro: Memoria Insuficiente - Linhas \n";
@@ -187,7 +187,7 @@ Matrix Matrix::operator -= (Matrix& b) const{
 
 
 
-Matrix Matrix::operator + ( Matrix b)const{
+Matrix Matrix::operator + ( Matrix& b)const{
     if (n_lin_== b.n_lin_&& n_col_== b.n_col_) {
         Matrix sum(n_lin_, n_col_);
         for (int i = 0; i < n_lin_; i++) {
@@ -220,35 +220,52 @@ Matrix Matrix::operator * (Matrix& b) const{
     if (n_col_==b.n_lin_) {
         Matrix sum(n_lin_, b.n_col_);
         for (int i=0;i< n_lin_;i++){
-        for(int j=0; j < b.n_col_;j++){
-          for (int k = 0; k < n_col_; k++) {
-            sum.matrix[i][j] = sum.matrix[i][j] + ((matrix[i][k]) * (b.matrix[k][j]) );
-          }
+            for(int j=0; j < b.n_col_;j++){
+                for (int k = 0; k < n_col_; k++) {
+                    sum.matrix[i][j] = sum.matrix[i][j] + ((matrix[i][k]) * (b.matrix[k][j]) );
+                }
+            }
         }
-      }
         return sum;
     }else{
         std::cout << " ERRO: Impossivel fazer a multiplicação" << '\n';
     }
 }
-Matrix Matrix::operator *= (Matrix& b) const{
-    Matrix sum(b.n_lin_, b.n_col_);
+
+
+
+
+Matrix Matrix::operator *= (const Matrix& b) {
     if (n_col_==b.n_lin_) {
-      /* no caso de uma matrix m1(1x5) = m1(1x5)* m2(5x9)
-      vai ter que alocar mais memória para m1, já que agora terá 9 Colunas
-      tem que usar realloc ?
-      ou usar uma matrix auxiliar e depois atribuir a m1 = aux ?
+        Matrix sum(n_lin_, b.n_col_);
 
-      */
-
-      for (int i=0;i< n_lin_;i++){
-        for(int j=0; j < b.n_col_;j++){
-          for (int k = 0; k < n_col_; k++) {
-            sum.matrix[i][j]=sum.matrix[i][j]+((matrix[i][k])*(b.matrix[k][j]));
-          }
+        for (int i=0;i< n_lin_;i++){
+            for(int j=0; j < b.n_col_;j++){
+                for (int k = 0; k < n_col_; k++) {
+                    sum.matrix[i][j] = sum.matrix[i][j] + ((matrix[i][k]) * (b.matrix[k][j]));
+                }
+            }
         }
-      }
-        return sum;
+
+        n_col_ = b.n_col_;
+        
+        delete matrix;
+        
+        matrix = new double *[n_lin_];
+        if(matrix == NULL){
+            std::cout << "Erro: Memoria Insuficiente - Linhas \n";
+        }
+        for(int i = 0; i < n_lin_; i++){
+            matrix[i] = new double [n_col_];
+            if(matrix == NULL){
+                std::cout << "Erro: Memoria Insuficiente - Colunas \n";
+            }
+        }
+
+        *this = sum;
+
+        return *this;
+
     }else{
         std::cout << " ERRO: Impossivel fazer a multiplicação" << '\n';
     }

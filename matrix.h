@@ -16,10 +16,10 @@ class Matrix {
         int getRows();
         int getCols();
         Matrix& operator = (const Matrix& b);
-        Matrix operator + (Matrix b)const;
+        Matrix operator + (Matrix& b)const;
         Matrix operator - (Matrix& b) const;
         Matrix operator * (Matrix& b) const;
         Matrix operator -= (Matrix& b) const;
         Matrix operator += (Matrix& b) const;
-        Matrix operator *= (Matrix& b) const;
+        Matrix operator *= (const Matrix& b);
 };
