@@ -4,10 +4,10 @@
 #include "matrix.cpp"
 
 int main(int argc, char const *argv[]) {
-    Matrix m(10,10);
-    Matrix m2(10,10);
+    Matrix m(5,10);
+    Matrix m2(5,10);
     Matrix m3(10,10);
-    Matrix m4(10,10);
+    Matrix m4(10,5);
     //std::cout <<" Matriz Identidade \n";
     m.unit();
     //std::cout <<" Matriz de Uns \n";
@@ -69,6 +69,15 @@ int main(int argc, char const *argv[]) {
     std::cout << "------------------   PRINT COUT << M   -----------------------\n";
 
     std::cout << m << std::endl;
+
+    Matrix m5(10,5);
+    m5.ones(); 
+    std::cout << "------------------   TRANSPOSTA M =~ A   -----------------------\n";
+    m =~ m5;  // PROBLEMAS COM PASSAGEM POR COPIA DA MATRIZ
+    m.imprime_matrix();
+
+
+
     /*
     std::cout << "Passou _ 2\n";
     m += m2;

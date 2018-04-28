@@ -29,14 +29,16 @@ Matrix::Matrix(int n_linhas, int n_colunas):n_lin_(n_linhas),n_col_(n_colunas)
     }
     std::cout << "Construtor" << '\n';
 }
-Matrix::Matrix(){
+Matrix::Matrix()
+{
   n_lin_ =0;
   n_col_=0;
   matrix =NULL;
 }
 
 //Destrutor
-Matrix::~Matrix(){
+Matrix::~Matrix()
+{
     if(matrix == NULL)
         std::cout << "Erro: Não foi passado um ponteiro para matriz \n";
     if(n_lin_< 1 || n_col_< 1){
@@ -77,7 +79,8 @@ Matrix::Matrix(const Matrix &outro) : n_lin_(outro.n_lin_),n_col_(outro.n_col_)
 }
 
 //Zera todos os elementos da Matriz
-void Matrix::zeros(){
+void Matrix::zeros()
+{
     for (int i = 0; i < n_lin_; i++) {
         for (int j = 0; j < n_col_; j++) {
             matrix[i][j]= 0;
@@ -86,7 +89,8 @@ void Matrix::zeros(){
 }
 
 //Torma a matriz uma matriz identidade
-void Matrix::unit(){
+void Matrix::unit()
+{
     int i,j;
     for (i = 0; i < n_lin_; i++) {
         for (j = 0; j < n_col_; j++) {
@@ -99,7 +103,8 @@ void Matrix::unit(){
 }
 
 //Preenche a matriz com um em todos os elementos
-void Matrix::ones(){
+void Matrix::ones()
+{
     int i,j;
     for (i = 0; i < n_lin_; ++i) {
         for (j = 0; j < n_col_; ++j) {
@@ -109,7 +114,8 @@ void Matrix::ones(){
 }
 
 //Imprime a Matriz
-void Matrix::imprime_matrix(){
+void Matrix::imprime_matrix()
+{
     int i,j;
     std::cout << "Imprimindo Matriz \n";
     for (i = 0; i < n_lin_; ++i) {
@@ -120,19 +126,22 @@ void Matrix::imprime_matrix(){
     }
 }
 
-int Matrix::getRows(){
+int Matrix::getRows()
+{
     int n_linhas = n_lin_;
     return n_linhas;
 }
 
 
-int Matrix::getCols(){
+int Matrix::getCols()
+{
     int n_colunas = n_col_;
     return n_colunas;
 }
 
 
-Matrix& Matrix::operator = (const Matrix& b) {
+Matrix& Matrix::operator = (const Matrix& b) 
+{
     if (this == &b) return *this;
     
     n_lin_  = b.n_lin_;
@@ -158,7 +167,9 @@ Matrix& Matrix::operator = (const Matrix& b) {
     return *this;
 }
 
-Matrix Matrix::operator += (Matrix& b) const{
+
+Matrix Matrix::operator += (Matrix& b) const
+{
     if (n_lin_== b.n_lin_&& n_col_== b.n_col_) {
         for (int i = 0; i < b.n_lin_; i++) {
             for (int j = 0; j < b.n_col_; ++j) {
@@ -168,9 +179,13 @@ Matrix Matrix::operator += (Matrix& b) const{
         return *this;
     }else{
       std::cout << " ERRO: Impossivel fazer a soma" << '\n';
+      return *this;
     }
 }
-Matrix Matrix::operator -= (Matrix& b) const{
+
+
+Matrix Matrix::operator -= (Matrix& b) const
+{
     if (n_lin_== b.n_lin_&& n_col_== b.n_col_) {
         for (int i = 0; i < b.n_lin_; ++i) {
             for (int j = 0; j < b.n_col_; ++j) {
@@ -179,15 +194,15 @@ Matrix Matrix::operator -= (Matrix& b) const{
         }
         return *this;
     }else{
-      std::cout << " ERRO: Impossivel fazer a subtração" << '\n';
+        std::cout << " ERRO: Impossivel fazer a subtração" << '\n';
+        return *this;
     }
 }
 
 
 
-
-
-Matrix Matrix::operator + ( Matrix& b)const{
+Matrix Matrix::operator + ( Matrix& b) const
+{
     if (n_lin_== b.n_lin_&& n_col_== b.n_col_) {
         Matrix sum(n_lin_, n_col_);
         for (int i = 0; i < n_lin_; i++) {
@@ -197,11 +212,14 @@ Matrix Matrix::operator + ( Matrix& b)const{
         }
         return sum;
     }else{
-      std::cout << " ERRO: Impossivel fazer a soma" << '\n';
+        std::cout << " ERRO: Impossivel fazer a soma" << '\n';
+        return *this;
     }
 }
 
-Matrix Matrix::operator - (Matrix& b) const{
+
+Matrix Matrix::operator - (Matrix& b) const
+{
     if (n_lin_== b.n_lin_&& n_col_== b.n_col_) {
         Matrix sum(n_lin_, n_col_);
         for (int i = 0; i < n_lin_; ++i) {
@@ -213,10 +231,13 @@ Matrix Matrix::operator - (Matrix& b) const{
         return sum;
     }else{
         std::cout << " ERRO: Impossivel fazer a subtração" << '\n';
+        return *this;
     }
 }
 
-Matrix Matrix::operator * (Matrix& b) const{
+
+Matrix Matrix::operator * (Matrix& b) const
+{
     if (n_col_==b.n_lin_) {
         Matrix sum(n_lin_, b.n_col_);
         for (int i=0;i< n_lin_;i++){
@@ -229,13 +250,15 @@ Matrix Matrix::operator * (Matrix& b) const{
         return sum;
     }else{
         std::cout << " ERRO: Impossivel fazer a multiplicação" << '\n';
+        return *this;
     }
 }
 
 
 
 
-Matrix Matrix::operator *= (const Matrix& b) {
+Matrix Matrix::operator *= (const Matrix& b) 
+{
     if (n_col_==b.n_lin_) {
         Matrix sum(n_lin_, b.n_col_);
 
@@ -268,11 +291,44 @@ Matrix Matrix::operator *= (const Matrix& b) {
 
     }else{
         std::cout << " ERRO: Impossivel fazer a multiplicação" << '\n';
+        return *this;
     }
 }
 
 
-std::ostream& operator<< (std::ostream& os, const Matrix& b){
+
+Matrix Matrix::operator ~()
+{
+    Matrix sum(n_col_, n_lin_);
+    for (int i=0;i< n_lin_;i++){
+        for(int j=0; j < n_col_;j++){
+            sum.matrix[i][j] = matrix[j][i];
+        }
+    }
+    n_lin_ = n_col_;
+    n_col_ = n_lin_;
+        
+    delete matrix;
+        
+    matrix = new double *[n_lin_];
+    if(matrix == NULL){
+        std::cout << "Erro: Memoria Insuficiente - Linhas \n";
+    }
+    for(int i = 0; i < n_lin_; i++){
+        matrix[i] = new double [n_col_];
+        if(matrix == NULL){
+            std::cout << "Erro: Memoria Insuficiente - Colunas \n";
+        }
+    }
+
+    *this = sum;
+    return *this;
+}
+
+
+
+std::ostream& operator<< (std::ostream& os, const Matrix& b)
+{
     int i,j;
     std::string print;
     print = "Imprimindo Matriz \n";
@@ -286,8 +342,9 @@ std::ostream& operator<< (std::ostream& os, const Matrix& b){
     return os;
 }
 
-std::string toString(double val)
-{
+
+
+std::string toString(double val){
     std::stringstream ss(" ");
     ss << val;
     return ss.str();
