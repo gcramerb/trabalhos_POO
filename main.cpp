@@ -2,7 +2,6 @@
 #include <string>
 #include "matrix.h"
 #include "matrix.cpp"
-using namespace std;
 
 int main(int argc, char const *argv[]) {
     Matrix m(10,10);
@@ -66,6 +65,10 @@ int main(int argc, char const *argv[]) {
     std::cout << "------------------   MULTIPLICAÇÃO M = M2 * M4   -----------------------\n";
     m = m2 * m4;  // PROBLEMAS COM PASSAGEM POR COPIA DA MATRIZ
     m.imprime_matrix();
+
+    std::cout << "------------------   PRINT COUT << M   -----------------------\n";
+
+    std::cout << m << std::endl;
     /*
     std::cout << "Passou _ 2\n";
     m += m2;

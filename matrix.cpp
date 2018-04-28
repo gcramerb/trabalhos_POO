@@ -2,7 +2,7 @@
 #include <string>
 #include <stdio.h>
 #include <stdlib.h>
-using namespace std;
+#include <sstream>
 
 //Construtor
 Matrix::Matrix(int n_linhas, int n_colunas):n_lin_(n_linhas),n_col_(n_colunas)
@@ -269,4 +269,26 @@ Matrix Matrix::operator *= (const Matrix& b) {
     }else{
         std::cout << " ERRO: Impossivel fazer a multiplicação" << '\n';
     }
+}
+
+
+std::ostream& operator<< (std::ostream& os, const Matrix& b){
+    int i,j;
+    std::string print;
+    print = "Imprimindo Matriz \n";
+    for (i = 0; i < b.n_lin_; ++i) {
+        for (j = 0; j < b.n_col_; ++j) {
+        print = print + " " + toString(b.matrix[i][j]);
+        }
+        print = print + '\n';
+    }
+    os << print;
+    return os;
+}
+
+std::string toString(double val)
+{
+    std::stringstream ss(" ");
+    ss << val;
+    return ss.str();
 }

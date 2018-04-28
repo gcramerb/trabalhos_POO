@@ -22,4 +22,8 @@ class Matrix {
         Matrix operator -= (Matrix& b) const;
         Matrix operator += (Matrix& b) const;
         Matrix operator *= (const Matrix& b);
+        friend std::ostream& operator<< (std::ostream& os, const Matrix& b);
+
 };
+
+std::string toString(double val);
