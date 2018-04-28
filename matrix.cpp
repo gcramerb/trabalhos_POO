@@ -53,9 +53,9 @@ Matrix::Matrix(const Matrix &outro) : n_lin_(outro.n_lin_),n_col_(outro.n_col_)
 {
   std::cout << "-------------------Construtor de cópia ! ----------------" << '\n';
   //Alocação dinamica da matriz
-  if(outro.n_lin_< 1 || outro.n_col_< 1){
-      std::cout << "Erro: Parametros invalidos \n";
-  }
+  //if(outro.n_lin_< 1 || outro.n_col_< 1){
+    //  std::cout << "Erro: Parametros invalidos \n";
+  //}
   this->matrix = new double *[outro.n_lin_];
   if(this->matrix == NULL){
       std::cout << "Erro: Memoria Insuficiente - Linhas \n";
@@ -132,18 +132,32 @@ int Matrix::getCols(){
 }
 
 
-void Matrix::operator = (Matrix& b)const {
-    if (n_lin_== b.n_lin_&& n_col_== b.n_col_) {
-      //alocar espaco ?
-        for (int i = 0; i < b.n_lin_; ++i) {
+Matrix& Matrix::operator = (const Matrix& b) {
+    if (this == &b) return *this;
+    delete matrix;
+
+    n_lin_  = b.n_lin_;
+    n_col_ = b.n_col_;
+    
+    
+    matrix = new double *[n_lin_];
+    if(matrix == NULL){
+        std::cout << "Erro: Memoria Insuficiente - Linhas \n";
+    }
+    for(int i = 0; i < n_lin_; i++){
+        matrix[i] = new double [n_col_];
+        if(matrix == NULL){
+            std::cout << "Erro: Memoria Insuficiente - Colunas \n";
+        }
+    }
+    for (int i = 0; i < b.n_lin_; ++i) {
             for (int j = 0; j < b.n_col_; ++j) {
               matrix[i][j] = b.matrix[i][j];
             }
         }
-    }else{
-      std::cout << " ERRO: Impossivel fazer a atribuicao" << '\n';
-    }
+    return *this;
 }
+
 Matrix Matrix::operator += (Matrix& b) const{
     if (n_lin_== b.n_lin_&& n_col_== b.n_col_) {
         for (int i = 0; i < b.n_lin_; i++) {
@@ -173,13 +187,12 @@ Matrix Matrix::operator -= (Matrix& b) const{
 
 
 
-Matrix Matrix::operator + (const Matrix& b)const{
-    Matrix sum(n_lin_, n_col_);
+Matrix Matrix::operator + ( Matrix b)const{
     if (n_lin_== b.n_lin_&& n_col_== b.n_col_) {
+        Matrix sum(n_lin_, n_col_);
         for (int i = 0; i < n_lin_; i++) {
           for (int j = 0; j < n_col_; j++) {
-
-                sum.matrix[i][j] += this->matrix[i][j] + b.matrix[i][j];
+                sum.matrix[i][j] = matrix[i][j] + b.matrix[i][j];
           }
         }
         return sum;

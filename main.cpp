@@ -19,10 +19,8 @@ int main(int argc, char const *argv[]) {
     //std::cout <<" Soma de Matrizes \n";
     //std::cout << "Passou _ 1\n";
     m3.imprime_matrix();
-    Matrix m6;
-    m6= m2+m4;  // PROBLEMAS COM PASSAGEM POR COPIA DA MATRIZ
-
-    m6.imprime_matrix();
+    m = m2 + m4;  // PROBLEMAS COM PASSAGEM POR COPIA DA MATRIZ
+    m.imprime_matrix();
     /*
     std::cout << "Passou _ 2\n";
     m += m2;
