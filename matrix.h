@@ -24,6 +24,7 @@ class Matrix {
         Matrix operator += (Matrix& b) const;
         Matrix operator *= (const Matrix& b);
         Matrix operator ~();
+        double& operator() (int i_lin, int i_col) const;
         friend std::ostream& operator<< (std::ostream& os, const Matrix& b);
 
 };

@@ -325,7 +325,13 @@ Matrix Matrix::operator ~()
     return *this;
 }
 
-
+double& Matrix::operator() (int i_lin, int i_col) const
+{
+    if (i_lin >= n_lin_ || i_col >= n_col_)
+        std::cout << "Os valores estão fora da matrix";
+    std::cout <<"um \n";
+    return matrix[i_lin][i_col];
+}
 
 std::ostream& operator<< (std::ostream& os, const Matrix& b)
 {
