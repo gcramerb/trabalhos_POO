@@ -69,9 +69,12 @@ int main(int argc, char const *argv[]) {
     std::cout << "------------------   PRINT COUT << M   -----------------------\n";
 
     std::cout << m << std::endl;
-
+    
+    std::cout << "------------------   MATRIZ Q SERA TRANSPOSTA   -----------------------\n";
+   
     Matrix m5(10,5);
     m5.ones(); 
+    m5.imprime_matrix();
     std::cout << "------------------   TRANSPOSTA M =~ A   -----------------------\n";
     m =~ m5;  // PROBLEMAS COM PASSAGEM POR COPIA DA MATRIZ
     m.imprime_matrix();

@@ -117,7 +117,7 @@ void Matrix::ones()
 void Matrix::imprime_matrix()
 {
     int i,j;
-    std::cout << "Imprimindo Matriz \n";
+    std::cout << "Imprimindo Matriz \n\n";
     for (i = 0; i < n_lin_; ++i) {
         for (j = 0; j < n_col_; ++j) {
         std::cout << matrix[i][j];
@@ -302,7 +302,7 @@ Matrix Matrix::operator ~()
     Matrix sum(n_col_, n_lin_);
     for (int i=0;i< n_lin_;i++){
         for(int j=0; j < n_col_;j++){
-            sum.matrix[i][j] = matrix[j][i];
+            sum.matrix[j][i] = matrix[i][j];
         }
     }
     n_lin_ = n_col_;
@@ -331,7 +331,7 @@ std::ostream& operator<< (std::ostream& os, const Matrix& b)
 {
     int i,j;
     std::string print;
-    print = "Imprimindo Matriz \n";
+    print = "Imprimindo Matriz \n\n";
     for (i = 0; i < b.n_lin_; ++i) {
         for (j = 0; j < b.n_col_; ++j) {
         print = print + " " + toString(b.matrix[i][j]);
