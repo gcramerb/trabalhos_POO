@@ -202,12 +202,11 @@ Matrix Matrix::operator + ( Matrix b)const{
 }
 
 Matrix Matrix::operator - (Matrix& b) const{
-    Matrix sum(b.n_lin_, b.n_col_);
     if (n_lin_== b.n_lin_&& n_col_== b.n_col_) {
-        for (int i = 0; i < b.n_lin_; ++i) {
-            for (int j = 0; j < b.n_col_; ++j) {
+        Matrix sum(n_lin_, n_col_);
+        for (int i = 0; i < n_lin_; ++i) {
+            for (int j = 0; j < n_col_; ++j) {
                 sum.matrix[i][j] = matrix[i][j] - b.matrix[i][j];
-                std::cout << sum.matrix[i][j];
             }
             std::cout << '\n';
         }
@@ -218,12 +217,12 @@ Matrix Matrix::operator - (Matrix& b) const{
 }
 
 Matrix Matrix::operator * (Matrix& b) const{
-    Matrix sum(n_lin_, b.n_col_);
     if (n_col_==b.n_lin_) {
-      for (int i=0;i< n_lin_;i++){
+        Matrix sum(n_lin_, b.n_col_);
+        for (int i=0;i< n_lin_;i++){
         for(int j=0; j < b.n_col_;j++){
           for (int k = 0; k < n_col_; k++) {
-            sum.matrix[i][j]=sum.matrix[i][j]+((matrix[i][k])*(b.matrix[k][j]));
+            sum.matrix[i][j] = sum.matrix[i][j] + ((matrix[i][k]) * (b.matrix[k][j]) );
           }
         }
       }

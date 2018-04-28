@@ -18,8 +18,14 @@ int main(int argc, char const *argv[]) {
     m4.ones();
     //std::cout <<" Soma de Matrizes \n";
     //std::cout << "Passou _ 1\n";
-    m3.imprime_matrix();
+    std::cout << "-------------------- SOMA M = M2 + M4 ------------------------------\n";
     m = m2 + m4;  // PROBLEMAS COM PASSAGEM POR COPIA DA MATRIZ
+    m.imprime_matrix();
+    std::cout << "--------------------  SUBTRAÇÃO M = M2 - M4  ------------------------------ \n";
+    m = m2 - m4;  // PROBLEMAS COM PASSAGEM POR COPIA DA MATRIZ
+    m.imprime_matrix();
+    std::cout << "------------------   MULTIPLICAÇÃO M = M2 * M4   -----------------------\n";
+    m = m2 * m4;  // PROBLEMAS COM PASSAGEM POR COPIA DA MATRIZ
     m.imprime_matrix();
     /*
     std::cout << "Passou _ 2\n";
