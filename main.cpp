@@ -50,28 +50,13 @@ int main(int argc, char const *argv[]) {
     m.imprime_matrix();
     std::cout << "------------------   PRINT COUT << M   -----------------------\n";
     std::cout << m << std::endl;
-    std::cout << "------------------   MATRIZ Q SERA TRANSPOSTA   -----------------------\n";   
+    std::cout << "------------------   MATRIZ Q SERA TRANSPOSTA   -----------------------\n";
     Matrix m5(10,5);
-    m5.ones(); 
+    m5.ones();
     m5(2,3) = 8;
     m5.imprime_matrix();
     std::cout << "------------------   TRANSPOSTA M =~ A   -----------------------\n";
-    m =~ m5;  // PROBLEMAS COM PASSAGEM POR COPIA DA MATRIZ
-    m.imprime_matrix();
-
-
-
-    /*
-    std::cout << "Passou _ 2\n";
-    m += m2;
-    std::cout << "Imprime m3 \n";
-    m3.imprime_matrix();
-    std::cout << "Imprime m\n";
-    m.imprime_matrix();
-    std::cout <<" FIM \n";
-    delete[] &m;
-    delete[] &m2;
-    delete[] &m3;
-    delete  &m4;
-    */
+    std::cout <<m <<'\n';
+    m *=2;  // PROBLEMAS COM PASSAGEM POR COPIA DA MATRIZ
+    std::cout <<m <<'\n';
 }

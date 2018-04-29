@@ -10,23 +10,21 @@ class Matrix {
         Matrix();
         ~Matrix();
         Matrix(const Matrix &);
-        void imprime_matrix();
         void ones();
         void zeros();
         void unit();
         int getRows();
         int getCols();
         Matrix& operator = (const Matrix& b);
-        Matrix operator + (Matrix& b)const;
-        Matrix operator - (Matrix& b) const;
-        Matrix operator * (Matrix& b) const;
-        Matrix operator -= (Matrix& b) const;
-        Matrix operator += (Matrix& b) const;
+        Matrix operator + (const Matrix& b);
+        Matrix operator - (const Matrix& b);
+        Matrix operator * (const Matrix& b);
+        Matrix operator -= (const Matrix& b);
+        Matrix operator += (const Matrix& b);
         Matrix operator *= (const Matrix& b);
+        Matrix operator *= (const double es);
         Matrix operator ~();
         double& operator() (int i_lin, int i_col) const;
         friend std::ostream& operator<< (std::ostream& os, const Matrix& b);
-
 };
-
 std::string toString(double val);
