@@ -1,10 +1,8 @@
 #include <iostream>
 #include <string>
-#include <stdio.h>
-#include <stdlib.h>
 #include <sstream>
 
-//Construtor
+//Construtor para entrada com parametros
 Matrix::Matrix(int n_linhas, int n_colunas):n_lin_(n_linhas),n_col_(n_colunas)
  {
     //Alocação dinamica da matriz
@@ -28,6 +26,8 @@ Matrix::Matrix(int n_linhas, int n_colunas):n_lin_(n_linhas),n_col_(n_colunas)
         }
     }
 }
+
+//Construtor sem entrada de parametros
 Matrix::Matrix()
 {
   n_lin_ =0;
@@ -35,23 +35,7 @@ Matrix::Matrix()
   matrix =NULL;
 }
 
-//Destrutor
-Matrix::~Matrix()
-{
-    //Desaloca toda a matriz
-    if(matrix == NULL)
-        std::cout << "Erro: Não foi passado um ponteiro para matriz \n";
-    if(n_lin_< 1 || n_col_< 1){
-        std::cout << "Erro: Parametros invalidos \n";
-    }
-    for(int i = 0; i < n_lin_; ++i){
-        delete[] matrix[i];
-    }
-    delete[] matrix;
-
-}
-
-//construtor de copia:
+//Construtor de copia:
 Matrix::Matrix(const Matrix &outro) : n_lin_(outro.n_lin_),n_col_(outro.n_col_)
 {
   this->matrix = new double *[outro.n_lin_];
@@ -71,6 +55,25 @@ Matrix::Matrix(const Matrix &outro) : n_lin_(outro.n_lin_),n_col_(outro.n_col_)
     }
   }
 }
+
+
+//Destrutor
+Matrix::~Matrix()
+{
+    //Desaloca toda a matriz
+    if(matrix == NULL)
+        std::cout << "Erro: Não foi passado um ponteiro para matriz \n";
+    if(n_lin_< 1 || n_col_< 1){
+        std::cout << "Erro: Parametros invalidos \n";
+    }
+    for(int i = 0; i < n_lin_; ++i){
+        delete[] matrix[i];
+    }
+    delete[] matrix;
+
+}
+
+
 
 //Zera todos os elementos da Matriz
 void Matrix::zeros()
@@ -120,6 +123,8 @@ int Matrix::getCols()
     int n_colunas = n_col_;
     return n_colunas;
 }
+
+
 
 //sobrecarga do operador =
 Matrix& Matrix::operator = (const Matrix& b)
@@ -284,6 +289,8 @@ Matrix Matrix::operator *= (const Matrix& b)
         return *this;
     }
 }
+
+
 // sobrecarga do operador *= (para a multiplicação por escalar)
 Matrix Matrix::operator *= (const double es)
 {
@@ -296,6 +303,7 @@ Matrix Matrix::operator *= (const double es)
   }
   return *this;
 }
+
 
 //sobrecarga do operador ~ (trasnposição)
 Matrix Matrix::operator ~()
@@ -334,10 +342,11 @@ double& Matrix::operator() (int i_lin, int i_col) const
 {
     if (i_lin >= n_lin_ || i_col >= n_col_)
         std::cout << "Os valores estão fora da matrix";
-    std::cout <<"um \n";
     //retorna o elemento desejado
     return matrix[i_lin][i_col];
 }
+
+
 
 // sobrecarga do operador <<
 std::ostream& operator<< (std::ostream& os, const Matrix& b)
@@ -355,6 +364,8 @@ std::ostream& operator<< (std::ostream& os, const Matrix& b)
     os << print;
     return os;
 }
+
+
 //função auxiliar para transformar um doube em string
 std::string toString(double val){
     std::stringstream ss(" ");

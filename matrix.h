@@ -1,10 +1,8 @@
-
 class Matrix {
     private:
         double **matrix;
         int n_lin_;
         int n_col_;
-        std::string op;
     public:
         Matrix(int n_lin, int n_col);
         Matrix();
@@ -28,3 +26,4 @@ class Matrix {
         friend std::ostream& operator<< (std::ostream& os, const Matrix& b);
 };
 std::string toString(double val);
+
